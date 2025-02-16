@@ -1,0 +1,46 @@
+<!-- templates/alerts.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Create Location Alert</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <!-- Location Alerts Form -->
+    <form method="POST" action="{{ url_for('alerts') }}" class="row g-3 mb-4">
+        <!-- Latitude -->
+        <div class="col-md-3">
+            <label for="latitude" class="form-label">Latitude:</label>
+            <input type="number" step="0.0001" name="latitude" id="latitude" class="form-control" placeholder="51.5074" required/>
+        </div>
+        <!-- Longitude -->
+        <div class="col-md-3">
+            <label for="longitude" class="form-label">Longitude:</label>
+            <input type="number" step="0.0001" name="longitude" id="longitude" class="form-control" placeholder="-0.1278" required/>
+        </div>
+        <!-- Alert Message -->
+        <div class="col-md-4">
+            <label for="alert_message" class="form-label">Alert Message:</label>
+            <input type="text" name="alert_message" id="alert_message" class="form-control" placeholder="Heavy rain in London!" required/>
+        </div>
+        <!-- Submit Button -->
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-warning">Create Alert</button>
+        </div>
+    </form>
+
+    <!-- Display Alerts -->
+    <h4>Existing Alerts</h4>
+    <a href="{{ url_for('alerts') }}" class="btn btn-secondary mb-3">Refresh Alerts</a>
+    <ul class="list-group">
+        {% for alert in alerts %}
+            <li class="list-group-item">
+                ID: {{ alert.id }}, Lat: {{ alert.latitude }}, Lng: {{ alert.longitude }}, Msg: {{ alert.alert_message }}
+            </li>
+        {% else %}
+            <li class="list-group-item">No alerts found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

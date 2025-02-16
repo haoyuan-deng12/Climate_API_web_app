@@ -1,0 +1,62 @@
+<!-- templates/world_map.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Interactive World Map</h2>
+    <br>
+    <div>
+        <input class="form-control" type="text" id="Latitude" name="Latitude" placeholder="Enter Latitude"
+               style="width: 150px; margin-bottom: 2rem" value="51.505">
+        <input class="form-control" type="text" id="Longitude" name="Longitude" placeholder="Enter Longitude"
+               style="width: 150px; margin-bottom: 2rem" value="-0.09">
+        <button id="searchBtn" type="button" class="btn btn-primary">Search</button>
+    </div>
+    <br>
+
+    <div id="map" style="height:500px; margin-top:20px; width: 1000px"></div>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        document.getElementById('searchBtn').addEventListener('click', function () {
+            let lat = parseFloat(document.getElementById('Latitude').value);
+            let lng = parseFloat(document.getElementById('Longitude').value);
+            if (!isNaN(lat) && !isNaN(lng)) {
+                map.setView([lat, lng], 12);
+                var circle = L.circle([lat, lng], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.1,
+                    radius: 600
+                }).addTo(map);
+                circle.bindPopup("Searched location");
+            }
+            document.getElementById('map').scrollIntoView({ behavior: 'smooth' });
+
+        })
+
+
+    </script>
+
+
+
+
+{% endblock %}

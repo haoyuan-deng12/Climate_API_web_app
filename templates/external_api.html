@@ -1,0 +1,115 @@
+<!-- templates/external_api.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Climate API Data</h2>
+    <form id="climateForm" class="row g-3 mb-3">
+        <div class="col-md-6">
+            <div class="col-md-4">
+                <label for="latitude" class="form-label">Latitude:</label>
+                <input type="number" step="0.0001" id="latitude" class="form-control" placeholder="e.g. 51.5072"
+                       value="51.5072" required/>
+            </div>
+            <div class="col-md-4">
+                <label for="longitude" class="form-label">Longitude:</label>
+                <input type="number" step="0.0001" id="longitude" class="form-control" placeholder="e.g. 0.1276"
+                       value="0.1276" required/>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary mt-4" onclick="fetchExternalData()">Fetch Climate Data
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div id="externalDataDisplay" class="alert alert-secondary" style="display: none;"></div>
+
+
+
+    <form id="globalFireForm" class="row g-3 mb-3" style="margin-top: 30rem;">
+        <h2>Global Fire Data</h2>
+
+        <div class="form-group">
+            <label for="country">Country Code (ISO 3):</label>
+            <input type="text" id="country" class="form-control" placeholder="Enter 3-char country code (e.g USA)">
+        </div>
+
+        <div class="form-group">
+            <label for="displayNumber">Display Number:</label>
+            <input type="number" id="displayNumber" class="form-control" placeholder="25">
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="source">Data Source:</label>
+            <select id="source" class="form-control">
+                <option value="VIIRS_SNPP_NRT">VIIRS_SNPP_NRT</option>
+                <option value="MODIS_C6_NRT">MODIS_C6_NRT</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dayRange">Day Range (1-10):</label>
+            <input type="number" id="dayRange" class="form-control" placeholder="Enter day range (1-10)">
+        </div>
+
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger" onclick="fetchFireData()">Fetch Fire Data</button>
+        </div>
+    </form>
+    <!-- Display Fire Data -->
+    <div id="fireDataDisplay" style="display:none; margin-top: 20px;"></div>
+    <br>
+
+
+
+    <form id="spillForm" class="row g-3 mb-3" style="margin-top: 30rem;">
+        <h2>Oil Slick Detection Query</h2>
+        <div class="form-group">
+            <label for="bbox">Bounding Box (bbox):</label>
+            <select id="bbox" class="form-control">
+                <option value="-10.5,49.5,1.8,60.9" selected>GBR</option>
+                <option value="-125,24,-66,50">USA</option>
+                <option value="73,18,135,53">China</option>
+                <option value="19,41,190,81">Russia</option>
+                <option value="68,6,97,36">India</option>
+                <option value="-74,-34,-34,6">Brazil</option>
+                <option value="-5.14,41.33,9.56,51.12">France</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="start_date">Start Date (UTC, format: YYYY-MM-DDTHH:MM:SSZ):</label>
+            <input type="text" id="start_date" class="form-control" placeholder="2024-09-01T00:00:00Z"
+                   value="2025-01-20T00:00:00Z">
+        </div>
+        <div class="form-group">
+            <label for="end_date">End Date (UTC, format: YYYY-MM-DDTHH:MM:SSZ):</label>
+            <input type="text" id="end_date" class="form-control" placeholder="2024-10-01T00:00:00Z"
+                   value="2025-01-31T00:00:00Z">
+        </div>
+        <div class="form-group">
+            <label for="min_confidence">Minimum Machine Confidence:</label>
+            <input type="text" id="min_confidence" class="form-control" placeholder="e.g 0.95" value="0.96">
+            <small class="form-text text-muted">
+                Machine confidence indicates the model's certainty that the detected oil slick is real. A higher value
+                means higher confidence.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="limit">Numbers of showing results:</label>
+            <input type="text" id="limit" class="form-control" placeholder="10">
+        </div>
+
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" onclick="fetchSlickData()">Query Oil Spill Data</button>
+        </div>
+    </form>
+
+    <!-- Display query results -->
+    <div id="slickDataDisplay" style="display:none;"></div>
+
+
+
+{% endblock %}

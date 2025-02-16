@@ -1,0 +1,11 @@
+<!-- templates/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Climate Dashboard</h2>
+    <p>Climate Statistics:</p>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Total Issues:</strong> {{ total_issues }}</li>
+        <li class="list-group-item"><strong>Average Severity:</strong> {{ average_severity }}</li>
+    </ul>
+{% endblock %}

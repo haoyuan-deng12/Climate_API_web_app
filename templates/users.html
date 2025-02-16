@@ -1,0 +1,44 @@
+<!-- templates/users.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Register User</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <!-- User Registration Form -->
+    <form method="POST" action="{{ url_for('users') }}" class="row g-3 mb-4">
+        <!-- Username -->
+        <div class="col-md-6">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="e.g. Alice" required/>
+        </div>
+        <!-- Role -->
+        <div class="col-md-4">
+            <label for="role" class="form-label">Role:</label>
+            <select name="role" id="role" class="form-select">
+                <option value="user" selected>User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <!-- Submit button -->
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </form>
+
+    <!-- Display All Users -->
+    <h4>All Registered Users</h4>
+    <a href="{{ url_for('users') }}" class="btn btn-secondary mb-3">Refresh Users</a>
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                ID: {{ user.id }}, Username: {{ user.username }}, Role: {{ user.role }}
+            </li>
+        {% else %}
+            <li class="list-group-item">No users found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
