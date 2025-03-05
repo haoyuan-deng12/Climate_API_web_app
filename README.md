@@ -1,7 +1,3 @@
-Below is an example of a detailed README in Markdown format that documents your project structure, requirements, usage instructions, and API endpoints.
-
----
-
 # Climate & Environmental Data Dashboard
 
 This project is a full-stack application built using Flask, SQLAlchemy, and MongoDB. It aggregates environmental data such as climate forecasts, global fire data, and oil slick detections. The frontend is powered by HTML, CSS, and JavaScript while the backend integrates with external APIs to fetch and store data.
@@ -170,6 +166,4 @@ Contributions are welcome! Please follow these steps:
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
 
-This README provides a comprehensive overview of your project, including detailed explanations of each component, usage instructions, and deployment information. Each section is carefully commented to ensure clarity and ease of maintenance.
