@@ -1,212 +1,162 @@
-# Climate Action App
+# Climate & Environmental Data Dashboard
 
-A robust Flask-based web application that provides real-time climate data monitoring and analysis. The app seamlessly integrates external APIs, displays query results on web pages, and stores returned data in MongoDB for persistent historical records.
-(Note: Some features are not implemented yet, mainly focusing on completed external API query, and MongoDB storage)
-
----
+This project is a full-stack application built using Flask, SQLAlchemy, and MongoDB. It aggregates environmental data such as climate forecasts, global fire data, and oil slick detections. The frontend is powered by HTML, CSS, and JavaScript while the backend integrates with external APIs to fetch and store data.
 
 ## Table of Contents
-
 - [Overview](#overview)
 - [Features](#features)
 - [Project Structure](#project-structure)
-- [Database Setup](#database-setup)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Installation & Setup](#installation--setup)
+- [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
-- [External Integrations](#external-integrations)
-- [Security & Logging](#security--logging)
+- [Frontend Usage](#frontend-usage)
+- [Docker Deployment](#docker-deployment)
+- [Contributing](#contributing)
 - [License](#license)
-
----
 
 ## Overview
 
-Climate Action App is a Flask-powered web application designed to monitor climate-related data. The app integrates with multiple external APIs to fetch data—such as weather forecasts, global fire information, and oil slick detection—and immediately displays the results on the user interface. Moreover, the application stores the fetched data into MongoDB, ensuring that historical records are maintained for further analysis.
-
----
+This application provides:
+- **User Management:** Registration and role-based access (admin or user).
+- **Climate Dashboard:** Display and analysis of climate issues and severity.
+- **Interactive Maps:** Visualize climate issues on a world map.
+- **External Data Integration:** Retrieve real-time data from:
+    - **Open-Meteo Climate API:** For temperature forecasts.
+    - **NASA FIRMS API:** For global fire data.
+    - **Cerulean API:** For oil slick detection data.
+- **Quiz Feature:** An interactive quiz to test users’ knowledge of environmental issues.
 
 ## Features
 
-  
-- **Location Alerts:**  
-  - Submit and view alerts with precise geographical coordinates and custom messages.
-
-
-- **Query API Results Display:** 
-  - **Implemented Feature:** Users can query external APIs (Open-Meteo, NASA FIRMS, Cerulean) and view the returned data immediately on the web pages.  
-  - **Real-Time Data:** API query results such as climate forecasts, fire data, and oil slick detections are dynamically fetched and rendered.
-
-
-- **Data Persistence in MongoDB:**  
-  - **Implemented Feature:** The application processes and stores the results returned from external API calls into MongoDB collections. This includes weather data, global fire data, and oil slick detection records, ensuring historical data is available for analysis.
-
-
-- **Responsive UI:**  
-  - Built using Bootstrap 5 for a clean and responsive design that works across all devices.
-
-
-- **Logging & Debugging:**  
-  - Extensive logging captures user activities and API interactions, with logs stored in a dedicated `logs.log` file.
-
----
+- **Flask Backend:** RESTful endpoints and traditional template rendering.
+- **SQLAlchemy with SQLite:** Manage user, alerts, and climate issues data.
+- **MongoDB Integration:** Store fetched external data such as fire and oil slick data.
+- **Dockerized Environment:** Containerized application for easy deployment.
+- **Frontend Components:** HTML templates with JavaScript to fetch and display external API data.
 
 ## Project Structure
 
 ```
-(Note: Some features are not implemented yet, mainly focusing on completed external API query, and MongoDB storage)
-Climate Action App/
-├── app.py                 # Main Flask application (routes, DB initialization, API endpoints)
-├── static/
-│   ├── main.js            # JavaScript for dynamic API calls and data rendering
-│  
-├── templates/
-│   ├── base.html          # Base template with navigation and common layout
-│   ├── home.html          # Homepage template
-│   ├── users.html         # User registration and listing template
-│   ├── alerts.html        # Location alerts submission and listing template
-│   ├── dashboard.html     # Climate dashboard template displaying statistics
-│   ├── external_api.html  # Template for interacting with external APIs and displaying results
-│   ├── quiz.html          # Climate quiz page
-│   ├── world_map.html     # Interactive world map template
-│   
-├── logs.log               # Log file recording user activity and API interactions
-├── requirements.txt       # Python dependencies for the project
-└── README.md              # Project documentation (this file)
+.
+├── app.py                  # Main Flask application, routes and database models
+├── Dockerfile              # Dockerfile for building the application image
+├── docker-compose.yml      # Docker Compose file for multi-container setup (Flask app + MongoDB)
+├── main.js                 # JavaScript file for fetching and displaying API data
+├── home.html               # Minimal homepage template
+├── external_api.html       # Template for interacting with external API data
+└── base.html               # Base template (assumed to be present in the templates directory)
 ```
 
----
+**Detailed Code Comments:**
+- Every route and function in `app.py` includes detailed inline comments explaining its purpose and behavior.
+- JavaScript functions in `main.js` include detailed commentary to explain how data is fetched, processed, and rendered in the browser.
 
-## Database Setup
-
-The application utilizes **two types of databases**:
-
-1. **SQL Database (SQLite):**  
-   - **Purpose:**  
-     Stores structured data such as user records, location alerts, and climate issues.
-   - **Configuration:**  
-     Utilizes SQLAlchemy with a SQLite database file named `climate_app.db`.
-   - **Models:**  
-     - **User:** Stores user IDs, usernames, and roles.
-     - **LocationAlert:** Contains alerts with latitude, longitude, and custom messages.
-     - **ClimateIssue:** Records climate issues with details like country, issue description, and severity.
-   - **Initialization:**  
-     Tables are auto-created on startup using `db.create_all()`.
-
-2. **NoSQL Database (MongoDB):**  
-   - **Purpose:**  
-     Used to persist external API data for dynamic datasets.
-   - **Configuration:**  
-     Connects to a local MongoDB server (`mongodb://localhost:27017/`) and uses a database named `local`.
-   - **Collections:**  
-     - **fireData:** Stores global fire data fetched from the NASA FIRMS API.
-     - **weatherData:** Stores climate forecast data retrieved from the Open-Meteo API.
-     - **oilData:** Stores oil slick detection data from the Cerulean API.
-   - **Data Insertion:**  
-     Fetched API results are processed and inserted into respective MongoDB collections to maintain historical records.
-
----
-
-## Installation
+## Installation & Setup
 
 1. **Clone the Repository:**
-
    ```bash
-   git clone https://github.com/yourusername/climate-action-app.git
-   cd climate-action-app
+   git clone https://your-repo-url.git
+   cd your-repo-directory
    ```
 
-2. **Set Up a Virtual Environment and Install Dependencies:**
-
+2. **Install Dependencies:**
+   Make sure you have Python 3 installed. Then, create a virtual environment and install the required packages:
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # For Windows: venv\Scripts\activate
+   python3 -m venv venv
+   source venv/bin/activate
    pip install -r requirements.txt
    ```
+   > *Note:* The `requirements.txt` should include dependencies such as Flask, SQLAlchemy, PyMongo, and requests.
 
-3. **Configure Environment:**
+3. **MongoDB Setup:**
+   If not using Docker, install MongoDB locally or configure the environment variable `MONGO_URI` with your MongoDB connection string.
 
-   - Ensure that MongoDB is installed and running locally.
-   - Adjust configuration variables as needed within the code or via environment settings.
+## Running the Application
 
-4. **Database Initialization:**
-
-   The application auto-creates necessary tables on startup. For production use, consider database migrations with Alembic.
-
----
-
-## Usage
-
-1. **Run the Application:**
-
+### Without Docker
+1. **Initialize the Database:**
+   The tables are created automatically when the application starts. If needed, you can manually trigger the database initialization by running:
    ```bash
    python app.py
    ```
 
-   The app runs in debug mode on port 5000 (access via [http://127.0.0.1:5000](http://127.0.0.1:5000)).
+2. **Run the Flask App:**
+   ```bash
+   flask run
+   ```
+   The application should be accessible at `http://127.0.0.1:5000/`.
+
+### With Docker
+
+1. **Build and Run Containers:**
+   Make sure Docker and Docker Compose are installed. Then run:
+   ```bash
+   docker-compose up --build
+   ```
+   This command builds the Flask application image and starts both the app and MongoDB services. The app is mapped to port 5000 on your host.
 
 2. **Access the Application:**
-
-   - **Homepage:** [http://127.0.0.1:5000](http://127.0.0.1:5000)
-   - **User Management:** [http://127.0.0.1:5000/users](http://127.0.0.1:5000/users)
-   - **Location Alerts:** [http://127.0.0.1:5000/alerts](http://127.0.0.1:5000/alerts)
-   - **Climate Dashboard:** [http://127.0.0.1:5000/dashboard](http://127.0.0.1:5000/dashboard)
-   - **Climate Quiz:** [http://127.0.0.1:5000/quiz](http://127.0.0.1:5000/quiz)
-   - **Interactive World Map:** [http://127.0.0.1:5000/world_map](http://127.0.0.1:5000/world_map)
-   - **External API Data:** [http://127.0.0.1:5000/external_api](http://127.0.0.1:5000/external_api)
-
-3. **Front-End Interactions:**
-
-   - API query results for climate data, fire data, and oil slick detections are dynamically fetched and displayed on their respective pages.
-   - The fetched data is stored in MongoDB for future reference, ensuring that historical data is preserved.
-
----
+   Navigate to `http://localhost:5000/` to view the dashboard.
 
 ## API Endpoints
 
-- **GET /climate_data:**  
-  Retrieves a 16-day climate forecast for a specified latitude and longitude using the Open-Meteo API.  
-  **Display:** Results are rendered on the external API data page and stored in the MongoDB `weatherData` collection.
+Below are some key API endpoints provided by the application:
 
-- **GET /fire_data:**  
-  Fetches global fire data from NASA FIRMS API with parameters for country, data source, and day range.  
-  **Display:** Data is displayed on the external API page and persisted in the MongoDB `fireData` collection.
+- **Home Page:**
+    - `GET /`  
+      Renders the homepage.
 
-- **GET /spill_data_oil:**  
-  Queries oil slick detection data from the Cerulean API, accepting bounding box, start/end dates, minimum confidence, and result limit.  
-  **Display:** Query results are shown on the external API page and stored in the MongoDB `oilData` collection.
+- **User Management:**
+    - `GET, POST /users`  
+      Display user list or register a new user.
 
-- **Other Routes:**  
-  Additional routes provide HTML-rendered pages for user registration, location alerts, dashboards, quizzes, and interactive maps.
+- **Location Alerts:**
+    - `GET, POST /alerts`  
+      Display alerts or add a new location alert.
 
----
+- **Climate Dashboard:**
+    - `GET /dashboard`  
+      Display the climate dashboard with aggregated statistics.
 
-## External Integrations
+- **Quiz:**
+    - `GET, POST /quiz`  
+      Serve quiz questions and process submissions.
 
-- **Open-Meteo API:**  
-  Supplies weather forecast data (daily max/min temperatures, timezone, etc.) for a 16-day period.
+- **World Map:**
+    - `GET /world_map`  
+      Render a page with an interactive world map of climate issues.
 
-- **NASA FIRMS API:**  
-  Provides global fire data, which is parsed and stored in MongoDB.
+- **External API Data:**
+    - `GET /external_api`  
+      Renders a page to fetch climate API data.
+    - `GET /climate_data`  
+      Retrieves climate forecast data using the Open-Meteo API.
+    - `GET /fire_data`  
+      Retrieves global fire data from the NASA FIRMS API.
+    - `GET /spill_data_oil`  
+      Retrieves oil slick detection data from the Cerulean API.
 
-- **Cerulean API:**  
-  Detects oil slicks using machine learning; results are processed, displayed, and stored for environmental monitoring.
+Each endpoint includes detailed logging and error handling to ensure a smooth data retrieval process.
 
----
+## Frontend Usage
 
-## Security & Logging
+- **Climate Data Query:**
+  The `external_api.html` page allows users to input latitude and longitude values to fetch climate forecast data. Results are displayed dynamically in an HTML table.
 
-- **Security Measures:**  
-  - Comprehensive input validations across all forms.
-  - Error handling and rate limiting implemented for API endpoints to prevent misuse.
-  
-- **Logging:**  
-  - Significant user activities and API interactions are logged in `logs.log` for audit and debugging purposes.
-  - Debug messages, including constructed API URLs, are printed to the console to aid troubleshooting.
+- **Fire Data and Oil Slick Detection:**
+  Forms on the `external_api.html` page allow querying and displaying fire data and oil slick detection results. Data is rendered in neatly formatted tables for easy viewing.
 
----
+## Docker Deployment
+
+The `docker-compose.yml` file defines two services:
+- **app:** The Flask application which builds the image from the local Dockerfile.
+- **mongodb:** The MongoDB database using the official image.
+
+The services are connected using Docker Compose, with the MongoDB service exposed to the Flask app via the `MONGO_URI` environment variable.
+
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 

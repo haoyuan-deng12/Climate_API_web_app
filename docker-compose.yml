@@ -1,0 +1,34 @@
+# Specify the version of Docker Compose syntax being used.
+version: "3.9"
+
+services:
+  # Define the service for your Flask application.
+  app:
+    # Build the Docker image using the Dockerfile in the current directory.
+    build: .
+    # Map port 5000 on the host to port 5000 on the container.
+    ports:
+      - "5000:5000"
+    # Ensure that the app service starts only after the MongoDB service is running.
+    depends_on:
+      - mongodb
+    # Set environment variables for the container.
+    environment:
+      # Use this environment variable in your Flask app to set the MongoDB connection string.
+      # In  Python code,  get it with: os.environ.get("MONGO_URI")
+      MONGO_URI: "mongodb://mongodb:27017/"
+
+  # Define the service for the MongoDB database.
+  mongodb:
+    # Use the official latest MongoDB image.
+    image: mongo:latest
+    # Map port 27017 on the host to port 27017 on the container.
+    ports:
+      - "27017:27017"
+    # Use a Docker named volume to persist MongoDB data between container restarts.
+    volumes:
+      - mongo-data:/data/db
+
+# Define the named volume for persisting MongoDB data.
+volumes:
+  mongo-data:

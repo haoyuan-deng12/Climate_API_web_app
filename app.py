@@ -20,7 +20,8 @@ db = SQLAlchemy(app)
 
 # ----- MongoDB Setup -----
 # Connect to local MongoDB server
-client = MongoClient("mongodb://localhost:27017/")
+mongo_uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017/")
+client = MongoClient(mongo_uri)
 # Use (or create) a database; here we use "fireDB" for example
 mango_db = client["local"]
 # Use (or create) a collection named "fireData"
