@@ -154,13 +154,6 @@ The `docker-compose.yml` file defines two services:
 
 The services are connected using Docker Compose, with the MongoDB service exposed to the Flask app via the `MONGO_URI` environment variable.
 
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Write detailed code comments in English and follow the existing style.
-4. Submit a pull request with a clear explanation of your changes.
 
 ## License
 
