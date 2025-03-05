@@ -21,9 +21,9 @@ This application provides:
 - **Climate Dashboard:** Display and analysis of climate issues and severity.
 - **Interactive Maps:** Visualize climate issues on a world map.
 - **External Data Integration:** Retrieve real-time data from:
-    - **Open-Meteo Climate API:** For temperature forecasts.
-    - **NASA FIRMS API:** For global fire data.
-    - **Cerulean API:** For oil slick detection data.
+  - **Open-Meteo Climate API:** For temperature forecasts.
+  - **NASA FIRMS API:** For global fire data.
+  - **Cerulean API:** For oil slick detection data.
 - **Quiz Feature:** An interactive quiz to test users’ knowledge of environmental issues.
 
 ## Features
@@ -103,38 +103,38 @@ This application provides:
 Below are some key API endpoints provided by the application:
 
 - **Home Page:**
-    - `GET /`  
-      Renders the homepage.
+  - `GET /`  
+    Renders the homepage.
 
 - **User Management:**
-    - `GET, POST /users`  
-      Display user list or register a new user.
+  - `GET, POST /users`  
+    Display user list or register a new user.
 
 - **Location Alerts:**
-    - `GET, POST /alerts`  
-      Display alerts or add a new location alert.
+  - `GET, POST /alerts`  
+    Display alerts or add a new location alert.
 
 - **Climate Dashboard:**
-    - `GET /dashboard`  
-      Display the climate dashboard with aggregated statistics.
+  - `GET /dashboard`  
+    Display the climate dashboard with aggregated statistics.
 
 - **Quiz:**
-    - `GET, POST /quiz`  
-      Serve quiz questions and process submissions.
+  - `GET, POST /quiz`  
+    Serve quiz questions and process submissions.
 
 - **World Map:**
-    - `GET /world_map`  
-      Render a page with an interactive world map of climate issues.
+  - `GET /world_map`  
+    Render a page with an interactive world map of climate issues.
 
 - **External API Data:**
-    - `GET /external_api`  
-      Renders a page to fetch climate API data.
-    - `GET /climate_data`  
-      Retrieves climate forecast data using the Open-Meteo API.
-    - `GET /fire_data`  
-      Retrieves global fire data from the NASA FIRMS API.
-    - `GET /spill_data_oil`  
-      Retrieves oil slick detection data from the Cerulean API.
+  - `GET /external_api`  
+    Renders a page to fetch climate API data.
+  - `GET /climate_data`  
+    Retrieves climate forecast data using the Open-Meteo API.
+  - `GET /fire_data`  
+    Retrieves global fire data from the NASA FIRMS API.
+  - `GET /spill_data_oil`  
+    Retrieves oil slick detection data from the Cerulean API.
 
 Each endpoint includes detailed logging and error handling to ensure a smooth data retrieval process.
 
